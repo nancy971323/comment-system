@@ -11,7 +11,7 @@
     <groupId>org.lidiannan</groupId>
     <artifactId>comment-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <n>comment-system</n>
+    <name>comment-system</name>
     <description>留言系統示範專案</description>
     <properties>
         <java.version>11</java.version>
