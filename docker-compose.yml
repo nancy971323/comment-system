@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # 資料庫
+  db:
+    image: postgres:13
+    container_name: comment-system-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: commentsystem
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # 後端
+  backend:
+    build: ./backend
+    container_name: comment-system-backend
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/commentsystem
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  # 前端
+  frontend:
+    build: ./frontend
+    container_name: comment-system-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
